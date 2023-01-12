@@ -1,0 +1,23 @@
+--cpu Cortex-M3
+"emb8618i_testing_motor\startup_stm32f107xc.o"
+"emb8618i_testing_motor\main.o"
+"emb8618i_testing_motor\stm32f1xx_it.o"
+"emb8618i_testing_motor\stm32f1xx_hal_msp.o"
+"emb8618i_testing_motor\stm32f1xx_hal_gpio_ex.o"
+"emb8618i_testing_motor\stm32f1xx_hal_tim.o"
+"emb8618i_testing_motor\stm32f1xx_hal_tim_ex.o"
+"emb8618i_testing_motor\stm32f1xx_hal.o"
+"emb8618i_testing_motor\stm32f1xx_hal_rcc.o"
+"emb8618i_testing_motor\stm32f1xx_hal_rcc_ex.o"
+"emb8618i_testing_motor\stm32f1xx_hal_gpio.o"
+"emb8618i_testing_motor\stm32f1xx_hal_dma.o"
+"emb8618i_testing_motor\stm32f1xx_hal_cortex.o"
+"emb8618i_testing_motor\stm32f1xx_hal_pwr.o"
+"emb8618i_testing_motor\stm32f1xx_hal_flash.o"
+"emb8618i_testing_motor\stm32f1xx_hal_flash_ex.o"
+"emb8618i_testing_motor\stm32f1xx_hal_exti.o"
+"emb8618i_testing_motor\system_stm32f1xx.o"
+--strict --scatter "EMB8618I_testing_motor\EMB8618I_testing_motor.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "EMB8618I_testing_motor.map" -o EMB8618I_testing_motor\EMB8618I_testing_motor.axf

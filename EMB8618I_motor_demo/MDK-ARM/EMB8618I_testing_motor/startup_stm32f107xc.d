@@ -1,0 +1,1 @@
+emb8618i_testing_motor\startup_stm32f107xc.o: startup_stm32f107xc.s
