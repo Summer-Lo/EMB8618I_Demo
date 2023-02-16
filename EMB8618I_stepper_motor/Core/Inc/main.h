@@ -57,8 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define M2_PUL_Pin GPIO_PIN_0
-#define M2_PUL_GPIO_Port GPIOA
+#define M4_PUL_Pin GPIO_PIN_0
+#define M4_PUL_GPIO_Port GPIOA
 #define M1_PUL_Pin GPIO_PIN_9
 #define M1_PUL_GPIO_Port GPIOE
 #define M1_DIR_Pin GPIO_PIN_11
@@ -69,6 +69,10 @@ void Error_Handler(void);
 #define M4_ENA_GPIO_Port GPIOE
 #define M4_DIR_Pin GPIO_PIN_10
 #define M4_DIR_GPIO_Port GPIOB
+#define M2_PUL_Pin GPIO_PIN_6
+#define M2_PUL_GPIO_Port GPIOC
+#define M2_DIR_Pin GPIO_PIN_7
+#define M2_DIR_GPIO_Port GPIOC
 #define M2_ENA_Pin GPIO_PIN_8
 #define M2_ENA_GPIO_Port GPIOC
 /* USER CODE BEGIN Private defines */

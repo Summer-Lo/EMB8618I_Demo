@@ -85,10 +85,14 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-	
-	HAL_GPIO_WritePin(M1_ENA_GPIO_Port,M1_ENA_Pin,GPIO_PIN_SET);
+	// Motor 1
+	HAL_GPIO_WritePin(M1_ENA_GPIO_Port,M1_ENA_Pin,GPIO_PIN_SET);			// Disable Motor 1 PE13
 	HAL_GPIO_WritePin(M1_DIR_GPIO_Port,M1_DIR_Pin,GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);
+	// Motor 2
+	HAL_GPIO_WritePin(M2_ENA_GPIO_Port,M2_ENA_Pin,GPIO_PIN_SET);			// Disable Motor 2 PC8
+	HAL_GPIO_WritePin(M2_DIR_GPIO_Port,M2_DIR_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_SET);
 	
   /* USER CODE END 2 */
 
@@ -103,34 +107,70 @@ int main(void)
 		HAL_Delay(20);
 		HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);
 		HAL_Delay(20);
-		Delay 20 => 16 microstep
-		Delay 10 => 8 microstep
-		Delay 5 => 4 microstep
+		Delay 20 ~~ 16 microstep
+		Delay 10 ~~ 8 microstep
+		Delay 5 ~~ 4 microstep
 		*/
-		HAL_GPIO_WritePin(M1_DIR_GPIO_Port,M1_DIR_Pin,GPIO_PIN_SET);			//Clockwise rotation	PE11
-		for(int x = 0; x<=10000; x++){			
-			HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_RESET);	// PE9	
-			
-			HAL_Delay(10);
-			
-			HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);		//PE9
-			
-			HAL_Delay(10);
+		HAL_GPIO_WritePin(M1_ENA_GPIO_Port,M1_ENA_Pin,GPIO_PIN_RESET);			// Enable Motor 1 PE13
+		HAL_GPIO_WritePin(M2_ENA_GPIO_Port,M2_ENA_Pin,GPIO_PIN_RESET);			// Enable Motor 2 PC8
+		HAL_GPIO_WritePin(M1_DIR_GPIO_Port,M1_DIR_Pin,GPIO_PIN_RESET);			// Clockwise rotation	PE11
+		HAL_GPIO_WritePin(M1_DIR_GPIO_Port,M1_DIR_Pin,GPIO_PIN_RESET);			// Clockwise rotation	PC7
+
+		for(int x = 0; x<=1000; x++){			
+			if(x <= 500)
+			{
+				HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_RESET);	// Motor 1 Pulse PE9	
+				HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_RESET);	// Motor 2 Pulse PC6	
+				
+				HAL_Delay(5);
+				
+				HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);		// Motor 1 Pulse PE9
+				HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_SET);		// Motor 2 Pulse PC6	
+				
+				HAL_Delay(5);
+			}
+			else
+			{
+				HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_RESET);	// Motor 1 Pulse PE9	
+				
+				HAL_Delay(5);
+				
+				HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);		// Motor 1 Pulse PE9
+				
+				HAL_Delay(5);
+			}
 		}
 		
 		HAL_Delay(500);
 		
 		HAL_GPIO_WritePin(M1_DIR_GPIO_Port,M1_DIR_Pin,GPIO_PIN_SET);		// Anti-Clockwise rotation	PE11
+		HAL_GPIO_WritePin(M2_DIR_GPIO_Port,M2_DIR_Pin,GPIO_PIN_SET);		// Anti-Clockwise rotation	PC7
+
 		
-		for(int x = 0; x<=10000; x++){			
-			HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_RESET);	// PE9
-			
-			HAL_Delay(10);
-			
-			HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);		// PE9
-			
-			HAL_Delay(10);
-			
+		for(int x = 0; x<=1000; x++){			
+			if(x <= 500)
+			{
+				HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_RESET);	// Motor 1 Pulse PE9
+				HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_RESET);	// Motor 2 Pulse PC6
+				
+				HAL_Delay(5);
+				
+				HAL_GPIO_WritePin(M1_PUL_GPIO_Port,M1_PUL_Pin,GPIO_PIN_SET);		// Motor 1 Pulse PE9
+				HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_SET);		// Motor 2 Pulse PC6
+				
+				HAL_Delay(5);
+			}
+			else
+			{
+				HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_RESET);	// Motor 2 Pulse PC6
+				
+				HAL_Delay(5);
+				
+				HAL_GPIO_WritePin(M2_PUL_GPIO_Port,M2_PUL_Pin,GPIO_PIN_SET);		// Motor 2 Pulse PC6
+				
+				HAL_Delay(5);
+				
+			}
 		}
 	
     //printf("Hello");
@@ -202,7 +242,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(M2_PUL_GPIO_Port, M2_PUL_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(M4_PUL_GPIO_Port, M4_PUL_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, M1_PUL_Pin|M1_DIR_Pin|M1_ENA_Pin|M4_ENA_Pin, GPIO_PIN_RESET);
@@ -211,14 +251,14 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(M4_DIR_GPIO_Port, M4_DIR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(M2_ENA_GPIO_Port, M2_ENA_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, M2_PUL_Pin|M2_DIR_Pin|M2_ENA_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : M2_PUL_Pin */
-  GPIO_InitStruct.Pin = M2_PUL_Pin;
+  /*Configure GPIO pin : M4_PUL_Pin */
+  GPIO_InitStruct.Pin = M4_PUL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(M2_PUL_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(M4_PUL_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : M1_PUL_Pin M1_DIR_Pin M1_ENA_Pin M4_ENA_Pin */
   GPIO_InitStruct.Pin = M1_PUL_Pin|M1_DIR_Pin|M1_ENA_Pin|M4_ENA_Pin;
@@ -234,12 +274,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(M4_DIR_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : M2_ENA_Pin */
-  GPIO_InitStruct.Pin = M2_ENA_Pin;
+  /*Configure GPIO pins : M2_PUL_Pin M2_DIR_Pin M2_ENA_Pin */
+  GPIO_InitStruct.Pin = M2_PUL_Pin|M2_DIR_Pin|M2_ENA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(M2_ENA_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
 
